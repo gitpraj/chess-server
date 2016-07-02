@@ -28,7 +28,7 @@ var board = null;
 
 var init = function() {
   var normalBoard = new NormalBoard;
-  var revisitBoard = new RevisitBoard();
+  var replayBoard = new ReplayBoard();
   normalBoard.init();
 
   $('#reset').click(function(){
@@ -38,13 +38,13 @@ var init = function() {
   $('#prev').click(function(){
     normalBoard.tearDown();
     console.log("prev clicked");
-    revisitBoard.prev();
+    replayBoard.prev();
   });
 
   $('#next').click(function(){
     normalBoard.tearDown();
     console.log("next clicked");
-    revisitBoard.next();
+    replayBoard.next();
   });
 }; 
 $(document).ready(init);
@@ -68,23 +68,24 @@ NormalBoard.prototype.update = function(){
 }
 
 
-function RevisitBoard(){
+function ReplayBoard(){
   this.goback = 0;
 }
 
 
-RevisitBoard.prototype.prev = function(){
-  this.goback += 1;
-  this.update();
+ReplayBoard.prototype.prev = function(){
+  this.update(this.goback + 1);
 };
 
-RevisitBoard.prototype.next = function(){
-  this.goback -= 1;
-  this.update();
+ReplayBoard.prototype.next = function(){
+  this.update(this.goback - 1);
 };
 
-RevisitBoard.prototype.update = function(){
-  $.get('/api/board?goback=' + this.goback, function(data){
+ReplayBoard.prototype.update = function(goback){
+  var _self = this;
+  $.get('/api/board?goback=' + goback, function(data){
+    // update only if successul
+    _self.goback = goback;
     board = ChessBoard('board', data);
   });
 }
