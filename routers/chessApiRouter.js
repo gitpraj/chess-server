@@ -11,6 +11,8 @@ chessApiRouter.get('/', function(req, res){
 // get the current board state
 chessApiRouter.get('/board', goToPosition , returnBoard);
 
+chessApiRouter.post('/board/reset', resetBoard, returnBoard);
+
 // get history
 chessApiRouter.get('/board/history', function(req, res){
   return res.send( chess.history() ); 
@@ -20,6 +22,13 @@ chessApiRouter.get('/board/history', function(req, res){
 chessApiRouter.post('/board', makeMove, returnBoard);
 
 // ---------------------------------------------------------------
+
+function resetBoard(req, res, next){
+  chess = new Chess();
+  req.chess = chess;
+  return next();
+}
+
 function goToPosition(req, res, next){
   console.log("Go to move : " + req.query.goback);
 
