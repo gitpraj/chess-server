@@ -9,7 +9,7 @@ node index.js
 
 ## API
 
-GET /api/board
+### GET /api/board
 
 Gets the current state of the board.  
 Supported parameters:  
@@ -34,7 +34,7 @@ Sample request and response:
 
 ```
 
-POST /api/board   
+### POST /api/board   
 {
   "move" : "Nf3"
 }
@@ -47,6 +47,17 @@ Sample request and response:
 > curl -H 'content-type: application/json' localhost:4444/api/board -d '{ "move" : "e4" }'
 
 rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1
+```
+
+### POST /api/board/reset   
+
+Resets the board to start of game. If successfull , returns 200 OK.
+
+Sample request and response:
+```
+> curl -XPOST localhost:4444/api/board/reset
+
+rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1
 ```
 
 ## Front End
