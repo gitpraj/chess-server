@@ -1,7 +1,7 @@
 var express = require('express');
 var chessApiRouter = express.Router();
 
-var Chess = require('../../chess.js/chess').Chess;
+var Chess = require('chess.js').Chess;
 var chess = new Chess();
 
 chessApiRouter.get('/', function(req, res){
